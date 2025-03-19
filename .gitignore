@@ -9,3 +9,5 @@ __pycache__/
 
 # File di configurazione di Visual Studio Code
 .vscode/
+
+src/rslidar_sdk
