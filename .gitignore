@@ -1,0 +1,11 @@
+build/
+install/
+log/
+
+# File temporanei di Python
+__pycache__/
+*.pyc
+*.pyo
+
+# File di configurazione di Visual Studio Code
+.vscode/
