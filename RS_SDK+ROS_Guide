@@ -1,0 +1,85 @@
+Comandi
+
+1. Installazione Git:
+sudo apt install git
+----
+2. Download repo rs sdk (https://github.com/RoboSense-LiDAR/rslidar_sdk?tab=readme-ov-file):
+git clone https://github.com/RoboSense-LiDAR/rslidar_sdk.git
+cd rslidar_sdk
+git submodule init
+git submodule update
+----
+3. Installazione ROS2 (Ubuntu 20 -> ROS2 Galactic) (https://docs.ros.org/en/galactic/Installation/Ubuntu-Install-Debians.html)
+
+3a. Set Locale
+locale  # check for UTF-8
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+locale  # verify settings
+
+3b. Setup sources
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+
+sudo apt update && sudo apt install curl
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+3b. Install Ros2 packages
+sudo apt update
+
+sudo apt upgrade
+
+sudo apt install ros-galactic-desktop
+
+sudo apt install ros-dev-tools
+
+3c. Environment setup
+# Replace ".bash" with your shell if you're not using bash
+# Possible values are: setup.bash, setup.sh, setup.zsh
+source /opt/ros/galactic/setup.bash
+
+3d. Test example
+source /opt/ros/galactic/setup.bash
+ros2 run demo_nodes_cpp talker
+
+source /opt/ros/galactic/setup.bash
+ros2 run demo_nodes_py listener
+
+3e. Optional: uninstall ros2 
+sudo apt remove ~nros-galactic-* && sudo apt autoremove
+
+sudo rm /etc/apt/sources.list.d/ros2.list
+sudo apt update
+sudo apt autoremove
+# Consider upgrading for packages previously shadowed.
+sudo apt upgrade
+----
+4. Yaml and libpcap (su github robosense)
+sudo apt-get update
+sudo apt-get install -y libyaml-cpp-dev
+
+sudo apt-get install -y  libpcap-dev
+----
+5. Compile with ROS2 colcon
+5a. create workspace folder (workspace folder: "lidar_project"), inside it create src folder, put rslidar_sdk inside
+5b. into /lidar_project/src run: git clone https://github.com/RoboSense-LiDAR/rslidar_msg.git
+5c. into /lidar_project run:
+	1) colcon build
+	2) source install/setup.bash
+	3) ros2 launch rslidar_sdk start.py
+
+(se non dovesse andare, prova a invertire 1) con 2)
+----
+6. Installazione Visual Studio
+Installa visual Studio da store
+----
+7. Configurazione pcap file
+7a. copia file pcap dentro una cartella
+7b. Config -> config.yaml
+	msg_source:3
+	lidar_type: RS128
+	pcap_path: incolla il path del pcap salvato
