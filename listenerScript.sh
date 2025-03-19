@@ -1,0 +1,2 @@
+source install/setup.bash
+ros2 run pointcloud_subscriber pointcloud_listener
